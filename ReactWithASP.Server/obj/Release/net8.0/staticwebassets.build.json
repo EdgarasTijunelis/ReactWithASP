@@ -1,0 +1,23 @@
+{
+  "Version": 1,
+  "Hash": "G3xrIcrHaY2+9XrDb+dnQmfPXoWtpA8ORllyVFnNazQ=",
+  "Source": "ReactWithASP.Server",
+  "BasePath": "_content/ReactWithASP.Server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "C:\\Users\\Edgaras\\source\\repos\\ReactWithASP\\reactwithasp.client\\reactwithasp.client.esproj",
+      "Version": 2,
+      "Source": "reactwithasp.client",
+      "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "Configuration=Release;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "Configuration=Release;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained"
+    }
+  ],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
