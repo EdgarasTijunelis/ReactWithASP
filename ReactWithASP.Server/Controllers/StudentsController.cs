@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ReactWithASP.Server.Data;
 using ReactWithASP.Server.Models.DTOs;
+using ReactWithASP.Server.Models.Entities;
 
 namespace ReactWithASP.Server.Controllers;
 
@@ -18,8 +19,22 @@ public class StudentsController(AppDbContext context) : ControllerBase
         List<StudentDto> results = [];
         foreach (var student in students)
         {
-            results.Add(new StudentDto(student.Id, $"{student.FirstName} {student.LastName}", student.Email));
+            results.Add(new StudentDto(student.Id, student.FirstName, student.LastName, student.Email));
         }
         return Ok(results);
     }
+    [HttpPut(template: "{id:int}")]
+
+    public async Task<IActionResult> Put(int id, StudentDto dto)
+    {
+        var student = await context.Students.FirstOrDefaultAsync(i=> i.Id == id);
+        if (student != null)
+        {
+            student.SetValues(dto.FirstName, dto.LastName, dto.Email);
+            context.Students.Update(student);
+            await context.SaveChangesAsync();
+        }
+        return Ok();
+    }
 }
+
