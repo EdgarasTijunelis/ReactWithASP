@@ -26,7 +26,7 @@ export async function getApi<T>(endpoint: string): Promise<T | undefined> {
 export async function postApi(
     endpoint: string,
     data: Record<string, any>,
-    methodType = '',
+    methodType = 'POST',
 ) {
     const fullUrl = getFullUrl(endpoint)
     let response

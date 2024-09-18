@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.1184077">
+﻿<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.1184077">
   <PropertyGroup>
     <StartupCommand>npm run dev</StartupCommand>
     <JavaScriptTestRoot>src\</JavaScriptTestRoot>
@@ -10,6 +10,5 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\pages\HomePage\" />
-    <Folder Include="src\pages\StudentsPage\Components\" />
   </ItemGroup>
 </Project>

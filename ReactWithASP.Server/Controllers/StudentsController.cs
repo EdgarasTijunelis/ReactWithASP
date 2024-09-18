@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ReactWithASP.Server.Data;
 using ReactWithASP.Server.Models.DTOs;
 using ReactWithASP.Server.Models.Entities;
+using ReactWithASP.Server.Services;
 
 namespace ReactWithASP.Server.Controllers;
 
@@ -10,30 +11,25 @@ namespace ReactWithASP.Server.Controllers;
 [Route("api/[controller]")]
 
 
-public class StudentsController(AppDbContext context) : ControllerBase
+public class StudentsController(IGetStudentService getStudentService, ISaveStudentService saveStudentService) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var students = await context.Students.ToListAsync();
-        List<StudentDto> results = [];
-        foreach (var student in students)
-        {
-            results.Add(new StudentDto(student.Id, student.FirstName, student.LastName, student.Email));
-        }
+        var results = await getStudentService.GetAll();
         return Ok(results);
     }
     [HttpPut(template: "{id:int}")]
 
     public async Task<IActionResult> Put(int id, StudentDto dto)
     {
-        var student = await context.Students.FirstOrDefaultAsync(i=> i.Id == id);
-        if (student != null)
-        {
-            student.SetValues(dto.FirstName, dto.LastName, dto.Email);
-            context.Students.Update(student);
-            await context.SaveChangesAsync();
-        }
+        await saveStudentService.Update(id, dto);
+        return Ok();
+    }
+    [HttpPost]
+    public async Task<IActionResult> Post(StudentDto dto)
+    {
+        await saveStudentService.Store(dto);
         return Ok();
     }
 }
