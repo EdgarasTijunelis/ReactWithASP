@@ -21,6 +21,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IGetStudentService, GetStudentService>();
 builder.Services.AddScoped<ISaveStudentService, SaveStudentService>();
+builder.Services.AddScoped<IDeleteStudentService, DeleteStudentService>();
+builder.Services.AddScoped<ILecturerServices, LecturerServices>();
+builder.Services.AddScoped<IGroupServices, GroupServices>();
+builder.Services.AddScoped<ISubjectServices, SubjectServices>();
+builder.Services.AddScoped<IProgrammeServices, ProgrammeServices>();
 
 var app = builder.Build();
 

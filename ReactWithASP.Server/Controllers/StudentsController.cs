@@ -11,7 +11,7 @@ namespace ReactWithASP.Server.Controllers;
 [Route("api/[controller]")]
 
 
-public class StudentsController(IGetStudentService getStudentService, ISaveStudentService saveStudentService) : ControllerBase
+public class StudentsController(IGetStudentService getStudentService, ISaveStudentService saveStudentService, IDeleteStudentService deleteStudentService) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetAll()
@@ -19,7 +19,7 @@ public class StudentsController(IGetStudentService getStudentService, ISaveStude
         var results = await getStudentService.GetAll();
         return Ok(results);
     }
-    [HttpPut(template: "{id:int}")]
+    [HttpPut("{id:int}")]
 
     public async Task<IActionResult> Put(int id, StudentDto dto)
     {
@@ -32,5 +32,16 @@ public class StudentsController(IGetStudentService getStudentService, ISaveStude
         await saveStudentService.Store(dto);
         return Ok();
     }
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        bool success = await deleteStudentService.Delete(id);
+        if (!success)
+        {
+            return NotFound($"Student with ID {id} not found.");
+        }
+        return NoContent(); 
+    }
 }
+
 

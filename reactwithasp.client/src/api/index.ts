@@ -16,7 +16,8 @@ export async function getApi<T>(endpoint: string): Promise<T | undefined> {
 
     try {
         const result = await fetch(fullUrl, getHeaders())
-        return await result.json()
+        const json = await result.json()
+        return json
     } catch (e: any) {
         console.error(e.message)
         return

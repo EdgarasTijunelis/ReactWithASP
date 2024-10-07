@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import { IStudent } from "../../interfaces/IStudent";
-import { getApi, putApi, postApi } from "../../api";
+import { getApi, putApi, postApi,deleteApi } from "../../api";
 import { Modal } from "../components/Modal";
-import { StudentDetailsModal } from "../components/StudentDetailsModal"
+import { StudentDetailsModal } from "./Components/StudentDetailsModal"
 import { StudentForm } from "./Components/StudentForm";
 import { AddStudentForm } from "./Components/AddStudentForm";
-import { UserIcon } from '@heroicons/react/24/solid'; 
+import { UserIcon,TrashIcon } from '@heroicons/react/24/solid'; 
 
 
 export default function Students() {
@@ -38,6 +38,25 @@ export default function Students() {
     const showDetails = (student: IStudent) => {
         setStudentDetails(student);
     }
+    const deleteHandler = async (id:number) => {
+        if (window.confirm("Ar tikrai norite iğtrinti ğá árağà?")) {
+            try {
+                await deleteApi(`students/${id}`, {}); 
+
+                const updatedStudents = students.filter(student => student.id !== id);
+                setStudents(updatedStudents);
+                alert("Árağas sëkmingai iğtrintas.");
+            } catch (error) {
+                if (error instanceof Error) {
+                    console.error("Failed to delete the student:", error.message);
+                    alert("Failed to delete the student: " + error.message);
+                } else {
+                    console.error("Failed to delete the student:", error);
+                    alert("Failed to delete the student: An unexpected error occurred.");
+                }
+            }
+        }
+    };
 
     useEffect(() => {
         getStudents().then( i=>i)
@@ -63,13 +82,13 @@ export default function Students() {
             <div>
                 {students.map((student) => (
                     <div key={student.id} className="flex items-center justify-between mb-2">
-                        <div>
+                        <div style={{ flexGrow: 1 }}>
                             <button type="button" onClick={() => editHandler(student)}>
-                                {student.firstName} {student.lastName}</button>{student.email}
+                                {student.firstName} {student.lastName} </button>{student.email}
                         </div>
-                        <UserIcon className="h-5 w-5 text-blue-500 cursor-pointer" onClick={() => showDetails(student)}/>
-                    </div>
-                ))}
+                        <UserIcon className="h-5 w-5 text-blue-500 cursor-pointer" onClick={() => showDetails(student)} />
+                        <TrashIcon className="h-5 w-5 text-red-500 cursor-pointer" onClick={() => deleteHandler(student.id)} />
+                    </div>))}
             </div>
         </div>
     );

@@ -1,0 +1,4 @@
+﻿namespace ReactWithASP.Server.Models.DTOs
+{
+    public record GroupDto(int Id, string GroupName);
+}
