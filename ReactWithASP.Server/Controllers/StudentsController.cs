@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ReactWithASP.Server.Data;
 using ReactWithASP.Server.Models.DTOs;
@@ -9,6 +10,7 @@ namespace ReactWithASP.Server.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 
 
 public class StudentsController(IGetStudentService getStudentService, ISaveStudentService saveStudentService, IDeleteStudentService deleteStudentService) : ControllerBase
@@ -20,19 +22,21 @@ public class StudentsController(IGetStudentService getStudentService, ISaveStude
         return Ok(results);
     }
     [HttpPut("{id:int}")]
-
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Put(int id, StudentDto dto)
     {
         await saveStudentService.Update(id, dto);
         return Ok();
     }
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Post(StudentDto dto)
     {
         await saveStudentService.Store(dto);
         return Ok();
     }
     [HttpDelete("{id:int}")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(int id)
     {
         bool success = await deleteStudentService.Delete(id);

@@ -1,5 +1,5 @@
-import { IStudent } from "../../../interfaces/IStudent";
-import { Modal } from "../../components/Modal";
+import { IStudent } from "@/interfaces/IStudent";
+import { Modal } from "@/pages/components/Modal";
 
 interface StudentDetailsModalProps {
     student: IStudent;

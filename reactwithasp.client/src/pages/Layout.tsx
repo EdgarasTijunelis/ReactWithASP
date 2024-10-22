@@ -1,8 +1,11 @@
 import { Link, Outlet, useFetcher, useFetchers, useNavigation } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { UserRoles } from "@/data/userRoles";
 
 export function Layout() {
     const navigation = useNavigation();
     const fetchers = useFetchers();
+    const { logoutHandler, auth } = useAuth();
     const fetcherInProgress = fetchers.some((f) =>
         ["loading", "submitting"].includes(f.state)
     );
@@ -15,21 +18,42 @@ export function Layout() {
                     <li>
                         <Link to="/">Home</Link>
                     </li>
-                    <li>
-                        <Link to="/students">Students</Link>
-                    </li>
-                    <li>
-                        <Link to="/studyProgrammes">Study Programmes</Link>
-                    </li>
-                    <li>
-                        <Link to="/lecturers">Lecturers</Link>
-                    </li>
-                    <li>
-                        <Link to="/groups">Groups</Link>
-                    </li>
-                    <li>
-                        <Link to="/subjects">Subjects</Link>
-                    </li>
+                    {
+                        auth?.isAuthenticated ? <>
+                            <li>
+                                <Link to="/students">Students</Link>
+                            </li>
+                            <li>
+                                <Link to="/programmes">Study Programmes</Link>
+                            </li>
+                            <li>
+                                <Link to="/lecturers">Lecturers</Link>
+                            </li>
+                            <li>
+                                <Link to="/groups">Groups</Link>
+                            </li>
+                            <li>
+                                <Link to="/subjects">Subjects</Link>
+                            </li>
+                            {
+                                auth?.role === UserRoles.Admin ?
+                                    <li>
+                                        <Link to="/admin/dashboard">Admin Panel</Link>
+                                    </li> : null
+                            }
+                            <li>
+                                <button onClick={logoutHandler}>Logout</button>
+                            </li>
+                        </> : <>
+                            <li>
+                                <Link to="/auth/signup">Registration</Link>
+                            </li>
+                            <li>
+                                <Link to="/auth/signin">Login</Link>
+                            </li>
+
+                        </>
+                    }
                 </ul>
             </nav>
         </header>

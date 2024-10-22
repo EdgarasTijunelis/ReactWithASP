@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import { IStudent } from "../../../interfaces/IStudent";
-import { formStyle } from "../../../styles/formStyle";
+import { IStudent } from "@/interfaces/IStudent";
+import { formStyle } from "@/styles/formStyle";
 
 interface AddStudentFormProps {
     saveNewStudent: (student: IStudent) => void;

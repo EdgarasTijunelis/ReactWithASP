@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react"
-import { IStudent } from "../../interfaces/IStudent";
-import { getApi, putApi, postApi,deleteApi } from "../../api";
-import { Modal } from "../components/Modal";
-import { StudentDetailsModal } from "./Components/StudentDetailsModal"
-import { StudentForm } from "./Components/StudentForm";
-import { AddStudentForm } from "./Components/AddStudentForm";
+ï»¿import { useEffect, useState } from "react"
+import { IStudent } from "@/interfaces/IStudent";
+import { getApi, putApi, postApi,deleteApi } from "@/api";
+import { Modal } from "@/pages/components/Modal";
+import { StudentDetailsModal } from "@/pages/StudentsPage/Components/StudentDetailsModal"
+import { StudentForm } from "@/pages/StudentsPage/Components/StudentForm";
+import { AddStudentForm } from "@/pages/StudentsPage/Components/AddStudentForm";
 import { UserIcon,TrashIcon } from '@heroicons/react/24/solid'; 
 
 
@@ -39,13 +39,13 @@ export default function Students() {
         setStudentDetails(student);
     }
     const deleteHandler = async (id:number) => {
-        if (window.confirm("Ar tikrai norite iðtrinti ðá áraðà?")) {
+        if (window.confirm("Ar tikrai norite iÅ¡trinti Å¡Ä¯ Ä¯raÅ¡Ä…?")) {
             try {
                 await deleteApi(`students/${id}`, {}); 
 
                 const updatedStudents = students.filter(student => student.id !== id);
                 setStudents(updatedStudents);
-                alert("Áraðas sëkmingai iðtrintas.");
+                alert("Ä®raÅ¡as sÄ—kmingai iÅ¡trintas.");
             } catch (error) {
                 if (error instanceof Error) {
                     console.error("Failed to delete the student:", error.message);
@@ -62,23 +62,23 @@ export default function Students() {
         getStudents().then( i=>i)
     }, []);
 
-    return (
+        return (
         <div>
             {visibleModal && (
-                <Modal visibleModal={visibleModal} setVisibleModal={setVisibleModal} title="Studentø forma">
+                <Modal visibleModal={visibleModal} setVisibleModal={setVisibleModal} title="StudentÅ³ forma">
                     <StudentForm storeStudent={storeStudent} student={editStudent} />
                 </Modal>
             )}
             {visibleAddModal && (
-                <Modal visibleModal={visibleAddModal} setVisibleModal={setVisibleAddModal} title="Pridëti naujà studentà">
+                <Modal visibleModal={visibleAddModal} setVisibleModal={setVisibleAddModal} title="PridÄ—ti naujÄ… studentÄ…">
                     <AddStudentForm saveNewStudent={saveNewStudent} />
                 </Modal>
             )}
             {studentDetails && (
-                <StudentDetailsModal student={studentDetails} onClose={() => setStudentDetails(undefined)}/>
+                <StudentDetailsModal student={studentDetails} onClose={() => setStudentDetails(undefined)} />
             )}
             <div className="text-3xl mb-4">Students</div>
-            <button type="button" onClick={addHandler} className="bg-blue-500 text-white border border-blue-700 rounded-lg py-2 px-4 mb-4 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">Pridëti naujà</button>
+            <button type="button" onClick={addHandler} className="bg-blue-500 text-white border border-blue-700 rounded-lg py-2 px-4 mb-4 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">PridÄ—ti naujÄ…</button>
             <div>
                 {students.map((student) => (
                     <div key={student.id} className="flex items-center justify-between mb-2">
@@ -90,6 +90,6 @@ export default function Students() {
                         <TrashIcon className="h-5 w-5 text-red-500 cursor-pointer" onClick={() => deleteHandler(student.id)} />
                     </div>))}
             </div>
-        </div>
-    );
+        </div>     
+        );
 }
